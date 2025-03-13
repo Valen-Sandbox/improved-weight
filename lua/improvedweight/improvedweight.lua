@@ -1,9 +1,9 @@
 --[[--------------------------------------------------------------------------
 	Improved Weight Module
-	
+
 	Author:
 		Mista-Tea ([IJWTB] Thomas)
-	
+
 	License:
 		The MIT License (MIT)
 
@@ -26,7 +26,7 @@
 		LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 		OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 		SOFTWARE.
-			
+
 	Changelog:
 ----------------------------------------------------------------------------]]
 
@@ -57,7 +57,7 @@ if ( SERVER ) then
 			Original = mass,
 			Modified = mass,
 		}
-		
+
 		ent:SetNWFloat( "OriginalWeight", mass )
 		ent:SetNWFloat( "ModifiedWeight", mass )
 	end
@@ -82,7 +82,7 @@ if ( SERVER ) then
 		if ( not IsSetup( ent ) ) then
 			Setup( ent )
 		end
-		
+
 		return ent.ImprovedWeight.Original
 	end
 
@@ -96,7 +96,7 @@ if ( SERVER ) then
 		if ( not IsSetup( ent ) ) then
 			Setup( ent )
 		end
-		
+
 		SetModifiedWeight( ent, GetOriginalWeight( ent ) )
 	end
 
@@ -110,7 +110,7 @@ if ( SERVER ) then
 		if ( not IsSetup( ent ) ) then
 			Setup( ent )
 		end
-		
+
 		return ent.ImprovedWeight.Modified
 	end
 
@@ -137,11 +137,11 @@ if ( SERVER ) then
 	--	Duplicator function to set the stored weight of an entity upon initialization.
 	--	Used by the Duplicator, AdvDupe, and AdvDupe2 tools.
 	--]]--
-	function SetMass( ply, ent, data )
+	function SetMass( _, ent, data )
 		if ( not IsValid( ent ) or not IsValid( ent:GetPhysicsObject() ) ) then return end
-		if ( not data.Mass ) then return end
+		if ( not data or not data.Mass ) then return end
 		if ( not IsSetup( ent ) ) then Setup( ent ) end
-		
+
 		local phys = ent:GetPhysicsObject()
 		phys:SetMass( data.Mass )
 		duplicator.StoreEntityModifier( ent, "mass", data )
@@ -159,7 +159,7 @@ elseif ( CLIENT ) then
 	function GetOriginalWeight( ent, default )
 		return ent:GetNWFloat( "OriginalWeight", default )
 	end
-	
+
 	--[[--------------------------------------------------------------------------
 	--
 	-- 	GetModifiedWeight( entity )
